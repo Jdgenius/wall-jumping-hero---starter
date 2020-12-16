@@ -4,6 +4,11 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     player.setImage(rightFacingImg)
 })
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (player.isHittingTile(CollisionDirection.Bottom)){
+        player.vy = -150
+    }
+})
 let player: Sprite = null
 let leftFacingImg: Image = null
 let rightFacingImg: Image = null
@@ -80,40 +85,8 @@ leftFacingImg = img`
     . . . . f f f . . . f f . . . . 
     `
 player = sprites.create(rightFacingImg, SpriteKind.Player)
+player.ay = 150
 controller.moveSprite(player, 75, 0)
-tiles.setTilemap(tiles.createTilemap(hex`100020000808080805080808080808080804080808080808050808080808080808040803080808080508080802020202020202020808080808080808080808080808080808080508080805080808080808040404080805080808050808080808080408060808080508080508080505050505050508080805080808080808080808080808050505080808080805080808080808080708050808080808050808080505080805050505050508080808080805050809080808080808080808080808050505050808050508080808080808080505080808080505080808080805080805050808080805080808080808080508050508080808050808050808080505080808080808080808080508080805050808080808080808080505080808050508080508080805080805050808080505080805080808050808050508080808080808050808080508080808080805080808080508080805080808080805050808080805080808080808080808050508080808050808080808080508080505080808080808080808080805080805050808080808080808080808050808080808080508080808080808080508080808080805080808080808080805050808080805050808080801080808080808080808080808080801010808080808080808080808080808010108080808080808080808080808080101010101010101010101010101010101`, img`
-    ....2........2..
-    ....2........2..
-    ....2...22222222
-    ................
-    ..2...2......222
-    ..2...2......2..
-    ...2..2..2222222
-    ...2............
-    222.....2.......
-    ..2.....2...22..
-    222222......22..
-    ............22..
-    ..22........22..
-    ..22.....2..22..
-    ..2.......2.22..
-    ..2..2...22.....
-    .....2...22.....
-    ....22...22..2..
-    .2..22...22..2..
-    .2..22.......2..
-    .2......2....2..
-    .2.....22....2..
-    .......22....2..
-    ....2..22.......
-    ....2..22.......
-    ....2......2....
-    ....2......2....
-    ....22....22....
-    2..............2
-    2..............2
-    2..............2
-    2222222222222222
-    `, [myTiles.transparency16,sprites.dungeon.floorLight2,sprites.dungeon.floorLight3,sprites.dungeon.chestClosed,sprites.dungeon.floorLight0,sprites.dungeon.floorLightMoss,sprites.dungeon.collectibleBlueCrystal,sprites.dungeon.collectibleRedCrystal,sprites.dungeon.darkGroundCenter,sprites.dungeon.collectibleInsignia], TileScale.Sixteen))
+tiles.setTilemap(tilemap`level`)
 tiles.placeOnTile(player, tiles.getTileLocation(8, 30))
 scene.cameraFollowSprite(player)
